@@ -1,5 +1,4 @@
-/*General Styles*/
-
+/* General Styles */
 * {
 	margin: 0;
 	padding: 0;
@@ -17,7 +16,7 @@ nav {
 
 a {
 	text-decoration: none;
-	opacity: 0.75;
+	opacity: .75;
 	color: #fff;
 }
 
@@ -41,8 +40,7 @@ section {
 	padding: 100px 80px;
 }
 
-/*Header Styles*/
-
+/* Header Styles */
 header {
 	position: absolute;
 	width: 100%;
@@ -50,12 +48,12 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	padding: 35px 100px 0;
-	animation: 1s fadein 0.5s forwards;
+	animation: 1s fadeIn .5s forwards;
 	opacity: 0;
 	color: #fff;
 }
 
-@keyframes fadein {
+@keyframes fadeIn {
 	100% {
 		opacity: 1;
 	}
@@ -74,8 +72,7 @@ header nav li {
 	margin: 0 15px;
 }
 
-/*Hero Styles*/
-
+/* Hero Styles */
 .hero {
 	position: relative;
 	justify-content: center;
@@ -112,15 +109,28 @@ header nav li {
 .hero-content-area {
 	opacity: 0;
 	margin-top: 100px;
-	animation: 1s slidefade 1s forwards;
+	animation: 1s slideFade 1s forwards;
 }
 
-@keyframes slidefade {
+@keyframes slideFade {
 	100% {
 		opacity: 1;
 		margin: 0;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

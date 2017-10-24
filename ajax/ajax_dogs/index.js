@@ -16,6 +16,7 @@ btn.addEventListener('click', function() {
 })
 
 const heading = document.querySelector('#heading');
+const img = document.querySelector('img');
 
 const textShine = () => {
 	let loopText = "Dogs For Matt"
@@ -31,4 +32,11 @@ const textShine = () => {
 	}
 }
 
+const border = () => {
+	setInterval( () => {
+	    	img.style.borderColor = '#'+Math.random().toString(16).substr(-6);
+	    }, 300);
+}
+
+border();
 textShine();

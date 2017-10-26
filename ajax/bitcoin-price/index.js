@@ -1,24 +1,22 @@
 const price = document.querySelector('span');
 const button = document.querySelector('button');
-const euro = document.querySelector('#euro');
-const pound = document.querySelector('#pound');
-const dollar = document.querySelector('#dollar');
+const currency = document.querySelectorAll('.curr');
 
 function getPrice() {
+	let curr;
+	currency.forEach(function(currency) {
+		if(currency.checked) {
+			curr = currency.value;
+		}
+		return curr;
+	})
+
 	const xhr = new XMLHttpRequest();
 
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState === 4) {
 			let data = JSON.parse(xhr.responseText);
-			let curr = 'EUR';
-			if (euro.checked) {
-				price.innerHTML = `${data.bpi.EUR.symbol} ${data.bpi.EUR.rate}`;
-			} else if (pound.checked) {
-				price.innerHTML = `${data.bpi.GBP.symbol} ${data.bpi.GBP.rate}`;
-			} else if (dollar.checked) {
-				price.innerHTML = `${data.bpi.USD.symbol} ${data.bpi.USD.rate}`;
-			}
-
+			price.innerHTML = `${data.bpi[curr].symbol} ${data.bpi[curr].rate}`;
 		}
 	}
 
@@ -26,6 +24,10 @@ function getPrice() {
 	xhr.send();
 }
 
-button.addEventListener('click', getPrice)
+button.addEventListener('click', getPrice);
+
+currency.forEach(currency => {
+	currency.addEventListener("click", getPrice);
+})
 
 getPrice();

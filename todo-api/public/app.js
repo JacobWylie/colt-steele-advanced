@@ -51,7 +51,15 @@ function newTodo(userInput) {
 }
 
 function deleteTodo(todo) {
-	console.log(todo.parentNode.getAttribute('data-id'))
+	fetch(`${url}/${todo.parentNode.getAttribute('data-id')}`, {
+		method: "DELETE",
+		headers: {
+			"Accept": "application/json, text/plain, */*",
+			"Content-Type": "application/json"
+		}
+	})
+	.then(handleErrors)
+	.then(todo.parentNode.parentNode.removeChild(todo.parentNode))
 }
 
 input.addEventListener('keydown', e => {

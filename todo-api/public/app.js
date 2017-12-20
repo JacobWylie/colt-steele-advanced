@@ -1,6 +1,7 @@
-const list = document.querySelector('.list');
-const input = document.querySelector('#todoInput');
-const url = "http://localhost:3000/api/todos";
+const list 		= document.querySelector('.list');
+const input 	= document.querySelector('#todoInput');
+const deleteBtn = document.querySelector('span'); 
+const url 		= "http://localhost:3000/api/todos";
 
 function getTodos() {
 	fetch(url)
@@ -27,7 +28,8 @@ function addTodos(res) {
 function addTodo(todo) {
 	const newTodo = document.createElement('li');
 	newTodo.classList.add('task');
-	newTodo.textContent = todo.name;
+	newTodo.setAttribute('data-id', todo._id)
+	newTodo.innerHTML = `${todo.name} <span>X</span>`;
 	if(todo.completed) {
 		newTodo.classList.add('done');
 	}
@@ -48,13 +50,22 @@ function newTodo(userInput) {
 	.then(todo => addTodo(todo))
 }
 
+function deleteTodo(todo) {
+	console.log(todo.parentNode.getAttribute('data-id'))
+}
+
 input.addEventListener('keydown', e => {
 	if (e.keyCode == 13) {
 		newTodo(e.target.value);
 		e.target.value = "";
 	}
-}) 
-	
+})
+
+list.addEventListener('click', e => {
+	if (e.target && e.target.matches("span")) {
+		deleteTodo(e.target);
+	}
+})
 
 getTodos();
 

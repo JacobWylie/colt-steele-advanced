@@ -6,7 +6,14 @@ const url 		= "http://localhost:3000/api/todos";
 function getTodos() {
 	fetch(url)
 	.then(handleErrors)
-	.then(addTodos)
+	.then( res => {
+		res.json()
+		.then( data => {
+			data.forEach(todo => {
+				addTodo(todo)
+			})
+		})
+	})
 }
 
 function handleErrors(res) {
@@ -16,19 +23,12 @@ function handleErrors(res) {
 	return res;
 }
 
-function addTodos(res) {
-	res.json()
-	.then( data => {
-		data.forEach(todo => {
-			addTodo(todo)
-		})
-	})
-}
 
 function addTodo(todo) {
 	const newTodo = document.createElement('li');
 	newTodo.classList.add('task');
-	newTodo.setAttribute('data-id', todo._id)
+	newTodo.setAttribute('data-id', todo._id);
+	newTodo.setAttribute('completed', todo.completed);
 	newTodo.innerHTML = `${todo.name} <span>X</span>`;
 	if(todo.completed) {
 		newTodo.classList.add('done');
@@ -50,6 +50,23 @@ function newTodo(userInput) {
 	.then(todo => addTodo(todo))
 }
 
+function toggleTodo(todo) {
+	let updateData;
+	todo.getAttribute('completed') == 'true' ? updateData = {completed: false} : updateData = {completed: true};
+	todo.classList.toggle('done');
+	fetch(`${url}/${todo.getAttribute('data-id')}`, {
+		method: "PUT",
+		headers: {
+			"Accept": "application/json, text/plain, */*",
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(updateData)
+	})
+	.then(handleErrors)
+	.then(res => res.json())
+	.then(res => res.completed ? todo.setAttribute('completed', 'true') : todo.setAttribute('completed', 'false'))
+}
+
 function deleteTodo(todo) {
 	fetch(`${url}/${todo.parentNode.getAttribute('data-id')}`, {
 		method: "DELETE",
@@ -66,6 +83,12 @@ input.addEventListener('keydown', e => {
 	if (e.keyCode == 13) {
 		newTodo(e.target.value);
 		e.target.value = "";
+	}
+})
+
+list.addEventListener('click', e => {
+	if (e.target && e.target.matches('li')) {
+		toggleTodo(e.target);
 	}
 })
 

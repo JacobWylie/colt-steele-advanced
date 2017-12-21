@@ -1,19 +1,14 @@
 const list 		= document.querySelector('.list');
 const input 	= document.querySelector('#todoInput');
 const deleteBtn = document.querySelector('span'); 
+const header = {"Accept": "application/json, text/plain, */*","Content-Type": "application/json"}
 const url 		= "http://localhost:3000/api/todos";
 
 function getTodos() {
 	fetch(url)
 	.then(handleErrors)
-	.then( res => {
-		res.json()
-		.then( data => {
-			data.forEach(todo => {
-				addTodo(todo)
-			})
-		})
-	})
+	.then(res => res.json())
+	.then(data => data.forEach(todo => addTodo(todo)))
 }
 
 function handleErrors(res) {
@@ -39,10 +34,7 @@ function addTodo(todo) {
 function newTodo(userInput) {
 	fetch(url, {
 		method: "POST",
-		headers: {
-			"Accept": "application/json, text/plain, */*",
-			"Content-Type": "application/json"
-		},
+		headers: header,
 		body: JSON.stringify({name: userInput})
 	})
 	.then(handleErrors)
@@ -56,10 +48,7 @@ function toggleTodo(todo) {
 	todo.classList.toggle('done');
 	fetch(`${url}/${todo.getAttribute('data-id')}`, {
 		method: "PUT",
-		headers: {
-			"Accept": "application/json, text/plain, */*",
-			"Content-Type": "application/json"
-		},
+		headers: header,
 		body: JSON.stringify(updateData)
 	})
 	.then(handleErrors)
@@ -70,13 +59,10 @@ function toggleTodo(todo) {
 function deleteTodo(todo) {
 	fetch(`${url}/${todo.parentNode.getAttribute('data-id')}`, {
 		method: "DELETE",
-		headers: {
-			"Accept": "application/json, text/plain, */*",
-			"Content-Type": "application/json"
-		}
+		headers: header
 	})
 	.then(handleErrors)
-	.then(todo.parentNode.parentNode.removeChild(todo.parentNode))
+	todo.parentNode.parentNode.removeChild(todo.parentNode);
 }
 
 input.addEventListener('keydown', e => {

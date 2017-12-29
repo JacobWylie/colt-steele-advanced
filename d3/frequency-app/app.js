@@ -1,3 +1,10 @@
+const width = 800;
+const height = 400;
+const barPadding = 10;
+let svg = d3.select('svg')
+				.attr('width', width)
+				.attr('height', height);
+
 d3.select('#reset')
 	.on('click', () => {
 		d3.selectAll('.letter')
@@ -13,10 +20,12 @@ d3.select('form')
 		d3.event.preventDefault();
 		const input = d3.select('input');
 		let text = input.property('value');
+		let data = getFrequencies(text);
+		let barWidth = width / data.length - barPadding;
 
-		let letters = d3.select('#letters')
+		let letters = svg
 			.selectAll('.letter')
-			.data(getFrequencies(text, d => d.character))
+			.data(data, d => d.character)
 
 		letters
 			.classed('new', false)
@@ -25,15 +34,14 @@ d3.select('form')
 
 		letters
 			.enter()
-			.append('div')
+			.append('rect')
 				.classed('letter', true)
 				.classed('new', true)
 			.merge(letters)
-				.style('width', '20px')
-				.style('line-height', '20px')
-				.style('margin-right', '5px')
-				.style('height', d => d.count * 20 + 'px')
-				.text(d => d.character);
+				.style('width', barWidth)
+				.style('height', d => d.count * 20)
+				.attr('x', (d, i) => (barWidth + barPadding) * i)
+				.attr('y', d => height - d.count * 20);
 
 		d3.select('#phrase')
 			.text(`Analysis of: ${text}`);
@@ -56,3 +64,22 @@ function getFrequencies(str) {
 }
 
 // getFrequencies('hello'); [{chracter: e, count: 1}, ..., {character: 'o', count: 1}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

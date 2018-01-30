@@ -4,7 +4,7 @@ import '../styles/Recipe.css'
 class Recipe extends Component {
 	render() {
 		const {title, img, instructions} = this.props;
-		const ingrediants = this.props.ingrediants.map((ing, i) => (
+		const ingrediants = this.props.ingredients.map((ing, i) => (
 			<li key={i}>{ing}</li>
 		))
 		return (

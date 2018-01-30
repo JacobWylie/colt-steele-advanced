@@ -10,7 +10,7 @@ class RecipeApp extends Component {
                 <Recipe t
                 	title = "Pasta" 
                 	ingrediants={['flour', 'water']}
-                	instructions="Mix ingrediants"
+                	instructions="Mix Ingrediants"
                 	img = 'pasta.png'
                 />
             </div>

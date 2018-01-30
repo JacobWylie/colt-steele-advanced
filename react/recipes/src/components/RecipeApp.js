@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import '../styles/RecipeApp.css'
 import Recipe from './Recipe';
+import Navbar from './Navbar';
 
 class RecipeApp extends Component {
     render() {
         return (
             <div className="App">
-                <h1>Recipe App</h1>
-                <Recipe t
+                <Navbar />
+                <Recipe
                 	title = "Pasta" 
                 	ingrediants={['flour', 'water']}
                 	instructions="Mix Ingrediants"

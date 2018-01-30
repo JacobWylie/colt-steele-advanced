@@ -59,7 +59,35 @@ RecipeList.defaultProps = {
 }
 
 RecipeList.propTypes = {
-	recipes: PropTypes.arrayOf(PropTypes.object)
+	recipes: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default RecipeList;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

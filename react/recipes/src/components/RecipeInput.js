@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import '../styles/RecipeInput.css'
 
 class RecipeInput extends Component {
+	static defaultProps = {
+	    onClose() {},
+	    onSave() {}
+  	}
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -9,12 +14,11 @@ class RecipeInput extends Component {
 			instructions: '',
 			ingredients: [''],
 			img: ''
-
 		};
-
 		this.handleChange = this.handleChange.bind(this);
-		this.handleNewIngredient = this.handleNewIngredient.bind(this);
-		this.handleChangeIng = this.handleChangeIng.bind(this);
+	    this.handleNewIngredient = this.handleNewIngredient.bind(this);
+	    this.handleChangeIng = this.handleChangeIng.bind(this);
+	    this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleChange(e) {
@@ -34,10 +38,20 @@ class RecipeInput extends Component {
 		this.setState({ingredients})
 	}
 
-	onClose() {}
+	handleSubmit(e) {
+		e.preventDefault();
+		this.props.onSave({...this.state})
+		this.setState({
+			title: '',
+			instructions: '',
+			ingredients: [''],
+			img: ''
+		})
+	}
 
 	render() {
 		const {title, instructions, img, ingredients} = this.state;
+		const {onClose} = this.props;
 		let inputs = ingredients.map((ing, i) => (
 			<div
 				className='recipe-form-line'
@@ -63,7 +77,7 @@ class RecipeInput extends Component {
 	          <button
 	            type="button"
 	            className="close-button"
-	            onClick={this.onClose}
+	            onClick={onClose}
 	          >
 	            X
 	          </button>

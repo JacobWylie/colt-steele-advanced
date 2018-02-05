@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import '../styles/RecipeInput.css'
 
 class RecipeInput extends Component {
 	static defaultProps = {
 	    onClose() {},
 	    onSave() {}
-  	}
+  	};
+
+  	static propTypes = {
+  		onClose: propTypes.func,
+  		onSave: propTypes.func
+  	};
 
 
 	constructor(props) {

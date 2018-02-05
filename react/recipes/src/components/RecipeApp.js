@@ -53,43 +53,29 @@ class RecipeApp extends Component {
 				}
 	    	],
 	    	nextRecipeId: 6,
+	    	showForm: false
 		}
 
 		this.handleSave = this.handleSave.bind(this);
 	}
 
 	handleSave(recipe) {
-	// 	this.setState((prevState, props) => {
-	// 		const newRecipe = {...recipe, id: this.state.nextRecipeId};
-	// 		console.log(prevState)
-	// 		return {
-	// 			nextRecipeId: prevState.nextRecipeId + 1,
-	// 			recipes: [...this.state.recipes, newRecipe]
-	// 		}
-	// 	})
-	 const {title, ingredients, instructions, img} = recipe;
-	const newRecipe = {
-             id: this.state.nextRecipeId,
-             title: title,
-             ingredients: ingredients,
-             instructions: instructions,
-             img:img
-           };
-  	this.setState(prevState => {
-  		return {
-  			nextRecipeId: prevState.nextRecipeId + 1,
-  			recipes: [...this.state.recipes, newRecipe]
-  		}
-  	});
-	// }
+		this.setState((prevState, props) => {
+			const newRecipe = {...recipe, id: this.state.nextRecipeId};
+			return {
+				nextRecipeId: prevState.nextRecipeId + 1,
+				recipes: [...this.state.recipes, newRecipe]
+			}
+		})
+	}
 
-}
 
     render() {
+    	const {showForm} = this.state;
         return (
             <div className="App">
-                <Navbar />
-                <RecipeInput onSave={this.handleSave}/>
+                <Navbar onNewRecipe={() => this.setState({showForm: true})}/>
+                { showForm ? <RecipeInput onSave={this.handleSave}/> : null }
                 <RecipeList recipes={this.state.recipes}/>
             </div>
         );
